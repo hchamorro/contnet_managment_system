@@ -9,8 +9,7 @@ const start = {
     "View All Employees by Manager",
     "Add Employee",
     "Remove Employee",
-    "Update Employee Role",
-    "Update Employee Manager"
+    "Update Employee Role"
   ]
 };
 

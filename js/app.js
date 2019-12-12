@@ -2,6 +2,7 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const questions = require("./questions");
 const queries = require("./queries");
+const cTable = require("console.table");
 
 //questions
 const start = questions.start;
@@ -20,8 +21,6 @@ const queryAddEmployee = queries.queryAddEmployee;
 const queryAddManager = queries.queryAddManager;
 const queryEmployeeTableAndDelete = queries.queryEmployeeTableAndDelete;
 const queryEmployeeTableAndUpdateRole = queries.queryEmployeeTableAndUpdateRole;
-
-const practice = queries.practice;
 
 const prompt = inquirer.createPromptModule();
 
@@ -124,8 +123,4 @@ function addManager() {
   });
 }
 
-//practice();
-
 init();
-
-// start run query function based on ans

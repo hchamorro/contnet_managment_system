@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+const cTable = require("console.table");
 
 const prompt = inquirer.createPromptModule();
 
@@ -14,56 +15,75 @@ const connection = mysql.createConnection({
 
 //query for getting all employees
 function queryAllEmployees() {
+  let data = [];
   let query =
     "SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name FROM employee INNER JOIN role ON role.id = employee.role_id INNER JOIN department ON department.id = role.department_id";
   connection.query(query, (err, res) => {
     if (err) throw err;
     res.forEach(employee => {
-      console.log(
-        `${employee.first_name} ${employee.last_name}, ${employee.title}, $${employee.salary}, ${employee.name}`
-      );
+      let info = [
+        `${employee.first_name} ${employee.last_name}`,
+        employee.title,
+        `$${employee.salary}`,
+        employee.name
+      ];
+      data.push(info);
     });
+    console.table(["Name", "Title", "Salary", "Department"], data);
   });
 }
 
 //query department
 
 function queryDepartments(x) {
+  let data = [];
   let query =
     "SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name FROM department INNER JOIN role ON department.id = role.department_id INNER JOIN employee ON role.id = employee.role_id WHERE  department.id = ?";
   connection.query(query, `${x}`, (err, res) => {
     if (err) throw err;
     res.forEach(emp => {
-      console.log(
-        `${emp.first_name} ${emp.last_name}, ${emp.title}, $${emp.salary}`
-      );
+      let info = [
+        `${emp.first_name} ${emp.last_name}`,
+        `${emp.title}`,
+        `$${emp.salary}`
+      ];
+      data.push(info);
     });
+    console.table(["Name", "Title", "Salary"], data);
   });
 }
 
 //query roles
 
 function queryRole(x) {
+  let data = [];
   let query =
     "SELECT employee.first_name, employee.last_name, role.salary FROM role INNER JOIN employee ON role.id = employee.role_id WHERE role.title = ?";
   connection.query(query, `${x}`, (err, res) => {
     if (err) throw err;
     res.forEach(emp => {
-      console.log(`${emp.first_name} ${emp.last_name}, $${emp.salary}`);
+      let info = [`${emp.first_name} ${emp.last_name}`, `$${emp.salary}`];
+      data.push(info);
     });
+    console.table(["Name", "Salary"], data);
   });
 }
 
 function queryManagers() {
+  let data = [];
   let query =
     "SELECT * FROM employee INNER JOIN role on role.id = employee.role_id WHERE manager_id";
   connection.query(query, (err, res) => {
     if (err) throw err;
     res.forEach(emp => {
-      console.log(
-        `${emp.first_name} ${emp.last_name}, ${emp.title}, $${emp.salary}`
-      );
+      let info = [
+        `${emp.first_name} ${emp.last_name}`,
+        `${emp.title}`,
+        `$${emp.salary}`
+      ];
+      data.push(info);
     });
+    console.table(["Name", "Title", "Salary"], data);
   });
 }
 
