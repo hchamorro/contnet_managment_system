@@ -18,6 +18,8 @@ const queryRole = queries.queryRole;
 const queryManagers = queries.queryManagers;
 const queryAddEmployee = queries.queryAddEmployee;
 const queryAddManager = queries.queryAddManager;
+const queryEmployeeTableAndDelete = queries.queryEmployeeTableAndDelete;
+const queryEmployeeTableAndUpdateRole = queries.queryEmployeeTableAndUpdateRole;
 
 const practice = queries.practice;
 
@@ -48,6 +50,16 @@ function init() {
     switch (action) {
       case "Add Employee":
         isManager();
+        break;
+    }
+    switch (action) {
+      case "Remove Employee":
+        queryEmployeeTableAndDelete();
+        break;
+    }
+    switch (action) {
+      case "Update Employee Role":
+        queryEmployeeTableAndUpdateRole();
         break;
     }
   });
@@ -94,22 +106,22 @@ function addEmployee() {
       ? (position = 2)
       : position === "Host"
       ? (position = 3)
-      : position === "Floor Manager"
-      ? (position = 4)
       : position === "Dish Washer"
       ? (position = 5)
-      : position === "Cook"
-      ? (position = 6)
-      : (position = 7);
+      : //else cook
+        (position = 6);
     queryAddEmployee(firstName, lastName, position);
   });
 }
 
-addManager() {
-  prompt(managerInfo).then(({firstName, lastName, position, id}) =>{
+function addManager() {
+  prompt(managerInfo).then(({ firstName, lastName, position, id }) => {
     position === "Floor Manager"
-      ? (position = 4): (position = 7);
-  })
+      ? (position = 4)
+      : //else chef
+        (position = 7);
+    queryAddManager(firstName, lastName, position, id);
+  });
 }
 
 //practice();

@@ -25,15 +25,7 @@ const employeesByRole = {
   type: "list",
   name: "roleTitle",
   message: "Which Role?",
-  choices: [
-    "Server",
-    "Buser",
-    "Host",
-    "Floor Manager",
-    "Dish Washer",
-    "Cook",
-    "Chef"
-  ]
+  choices: ["Server", "Buser", "Host", "Dish Washer", "Cook"]
 };
 
 const confirmManger = {
